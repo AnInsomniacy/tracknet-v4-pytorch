@@ -20,31 +20,17 @@ TrackNet V4 enhances sports object tracking by incorporating motion attention ma
 
 ## Installation
 
-### Option 1: pip
 ```bash
 git clone https://github.com/AnInsomniacy/tracknet-v4-pytorch.git
 cd tracknet-v4-pytorch
 pip install -r requirements.txt
 ```
 
-### Option 2: uv (recommended)
-```bash
-git clone https://github.com/AnInsomniacy/tracknet-v4-pytorch.git
-cd tracknet-v4-pytorch
-curl -LsSf https://astral.sh/uv/install.sh | sh
-source ~/.bashrc
-uv sync
-```
-
 ## Usage
 
 ### Data Preprocessing
 ```bash
-# Prepare your dataset
-python preprocessing/video_to_heatmap.py --source dataset/raw --output dataset/preprocessed
-
-# With uv
-uv run preprocessing/video_to_heatmap.py --source dataset/raw --output dataset/preprocessed
+python preprocess.py --source dataset/raw --output dataset/preprocessed
 ```
 
 ### Training
@@ -111,12 +97,12 @@ tracknet-v4-pytorch/
 │   ├── tracknet_v2.py          # Legacy TrackNet V2
 │   └── loss.py                 # Weighted Binary Cross Entropy loss
 ├── preprocessing/
-│   ├── video_to_heatmap.py     # Video preprocessing pipeline
 │   ├── tracknet_dataset.py     # PyTorch dataset loader
 │   └── data_visualizer.py      # Data visualization tools
 ├── predict/
 │   ├── single_frame_predict.py # Single frame inference
 │   └── video_predict.py        # Video batch processing
+├── preprocess.py               # Dataset preprocessing pipeline
 ├── train.py                    # Training script
 ├── test.py                     # Model evaluation
 └── requirements.txt            # Dependencies

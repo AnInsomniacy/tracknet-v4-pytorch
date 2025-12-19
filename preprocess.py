@@ -1,17 +1,13 @@
-"""
-Badminton Dataset Preprocessor
+"""Badminton Dataset Preprocessor
 
 Processes raw badminton video datasets for machine learning training.
-Extracts video frames, resizes to 512×288 resolution, and generates Gaussian
+Extracts video frames, resizes to 512x288 resolution, and generates Gaussian
 heatmaps for shuttlecock position detection in a streamlined pipeline.
 
 Usage Examples:
-    python video_to_heatmap.py --source dataset --output dataset_preprocessed
-    python video_to_heatmap.py --source /path/to/data --output /path/to/output --sigma 5
-    python video_to_heatmap.py --source dataset --sigma 4 --force
-
-Dependencies:
-    pip install opencv-python pandas numpy scipy tqdm
+    python preprocess.py --source dataset --output dataset_preprocessed
+    python preprocess.py --source /path/to/data --output /path/to/output --sigma 5
+    python preprocess.py --source dataset --sigma 4 --force
 """
 
 import argparse
