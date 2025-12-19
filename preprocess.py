@@ -2,6 +2,30 @@
 
 Usage:
     python preprocess.py --config config.yaml
+
+Input Structure:
+    dataset/
+    ├── match1/
+    │   ├── csv/
+    │   │   └── rally1_ball.csv
+    │   └── video/
+    │       └── rally1.mp4
+    └── match2/...
+
+Output Structure:
+    dataset_preprocessed/
+    ├── match1/
+    │   ├── inputs/
+    │   │   └── rally1/
+    │   │       ├── 0.jpg
+    │   │       ├── 1.jpg
+    │   │       └── ...
+    │   └── heatmaps/
+    │       └── rally1/
+    │           ├── 0.jpg
+    │           ├── 1.jpg
+    │           └── ...
+    └── match2/...
 """
 
 import gc
