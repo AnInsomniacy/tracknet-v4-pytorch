@@ -26,44 +26,37 @@ cd tracknet-v4-pytorch
 pip install -r requirements.txt
 ```
 
+## Configuration
+
+All parameters are configured in `config.yaml`. Edit this file to customize preprocessing, training, and testing settings.
+
 ## Usage
 
 ### Data Preprocessing
 ```bash
-python preprocess.py --source dataset/raw --output dataset/preprocessed
+python preprocess.py --config config.yaml
 ```
 
 ### Training
 ```bash
-# Basic training
-python train.py --data dataset/preprocessed
-
-# Custom configuration  
-python train.py --data dataset/preprocessed --batch 8 --epochs 50 --lr 0.001 --optimizer Adam
-
-# Resume training
-python train.py --resume checkpoints/model.pth --data dataset/preprocessed
+python train.py --config config.yaml
 ```
 
-### Evaluation
+### Testing
 ```bash
-# Test model performance
-python test.py --model best_model.pth --data dataset/test
+python test.py --config config.yaml
+```
 
-# Detailed evaluation report
-python test.py --model best_model.pth --data dataset/test --report detailed --out results/
+### TensorBoard
+```bash
+tensorboard --logdir outputs/
 ```
 
 ### Inference
 ```bash
-# Video prediction
 PYTHONPATH=. python predict/video_predict.py
-
-# Single frame prediction  
 PYTHONPATH=. python predict/single_frame_predict.py
 ```
-
-**Note:** Modify model and input paths in prediction scripts as needed for your data.
 
 ## Model Architecture
 
@@ -102,7 +95,8 @@ tracknet-v4-pytorch/
 ├── predict/
 │   ├── single_frame_predict.py # Single frame inference
 │   └── video_predict.py        # Video batch processing
-├── preprocess.py               # Dataset preprocessing pipeline
+├── config.yaml                 # Configuration file
+├── preprocess.py               # Dataset preprocessing
 ├── train.py                    # Training script
 ├── test.py                     # Model evaluation
 └── requirements.txt            # Dependencies
