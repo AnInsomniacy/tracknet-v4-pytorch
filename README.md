@@ -1,13 +1,17 @@
-# TrackNet V4 PyTorch
+# TrackNet Series PyTorch
 
-A PyTorch implementation of **TrackNet V4: Enhancing Fast Sports Object Tracking with Motion Attention Maps** for real-time tracking of small, fast-moving objects in sports videos.
+A PyTorch implementation of the **TrackNet Series** for real-time tracking of small, fast-moving objects in sports videos.
 
 ## Overview
 
-TrackNet V4 enhances sports object tracking by incorporating motion attention maps that focus on temporal changes between consecutive frames. The model excels at tracking small, fast-moving objects like tennis balls and ping-pong balls in challenging scenarios with occlusion and motion blur.
+This repository implements multiple versions of TrackNet for sports object tracking:
+
+- ✅ **TrackNet V2** - U-Net baseline with VGG-style encoder
+- ✅ **TrackNet V4** - Motion attention enhanced tracking
+- 🚧 **TrackNet V3** - Coming soon
 
 **Key Features:**
-- Motion-aware tracking with attention mechanisms
+- Multi-GPU DDP training support
 - Real-time video processing capabilities  
 - Robust handling of occlusion and motion blur
 - End-to-end training pipeline
@@ -17,27 +21,6 @@ TrackNet V4 enhances sports object tracking by incorporating motion attention ma
 - Python ≥ 3.10
 - PyTorch ≥ 1.9.0
 - CUDA (recommended for training)
-
-## Pretrained Model
-
-A pretrained model checkpoint is available for download:
-
-[Download Model (Google Drive)](https://drive.google.com/file/d/10bCCck9s_WDJkJq9DaFhddsawc-HNypn/view?usp=sharing)
-
-This model was trained on the dataset and achieves strong performance metrics on the test set (see Performance section below).
-
-The pretrained model achieves the following metrics on the test dataset:
-
-| Metric | Score |
-|--------|-------|
-| Accuracy | 94.4% |
-| Precision | 95.8% |
-| Recall | 97.2% |
-| F1-Score | 96.5% |
-
-*Evaluation performed on center frame predictions with threshold 0.5 and tolerance 4px*
-
-
 
 ## Installation
 
