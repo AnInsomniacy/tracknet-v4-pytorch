@@ -22,14 +22,6 @@ This repository implements multiple versions of TrackNet for sports object track
 - PyTorch ≥ 1.9.0
 - CUDA (recommended for training)
 
-## Installation
-
-```bash
-git clone https://github.com/AnInsomniacy/tracknet-v4-pytorch.git
-cd tracknet-v4-pytorch
-pip install -r requirements.txt
-```
-
 ## Configuration
 
 All parameters are configured in `config.yaml`. Edit this file to customize preprocessing, training, testing, and prediction settings.
