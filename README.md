@@ -1,13 +1,17 @@
-# TrackNet V4 PyTorch
+# TrackNet Series PyTorch
 
-A PyTorch implementation of **TrackNet V4: Enhancing Fast Sports Object Tracking with Motion Attention Maps** for real-time tracking of small, fast-moving objects in sports videos.
+A PyTorch implementation of the **TrackNet Series** for real-time tracking of small, fast-moving objects in sports videos.
 
 ## Overview
 
-TrackNet V4 enhances sports object tracking by incorporating motion attention maps that focus on temporal changes between consecutive frames. The model excels at tracking small, fast-moving objects like tennis balls and ping-pong balls in challenging scenarios with occlusion and motion blur.
+This repository implements multiple versions of TrackNet for sports object tracking:
+
+- ✅ **TrackNet V2** - U-Net baseline with VGG-style encoder
+- ✅ **TrackNet V4** - Motion attention enhanced tracking
+- 🚧 **TrackNet V3** - Coming soon
 
 **Key Features:**
-- Motion-aware tracking with attention mechanisms
+- Multi-GPU DDP training support
 - Real-time video processing capabilities  
 - Robust handling of occlusion and motion blur
 - End-to-end training pipeline
@@ -17,14 +21,6 @@ TrackNet V4 enhances sports object tracking by incorporating motion attention ma
 - Python ≥ 3.10
 - PyTorch ≥ 1.9.0
 - CUDA (recommended for training)
-
-## Installation
-
-```bash
-git clone https://github.com/AnInsomniacy/tracknet-v4-pytorch.git
-cd tracknet-v4-pytorch
-pip install -r requirements.txt
-```
 
 ## Configuration
 
@@ -50,6 +46,26 @@ python test.py --config config.yaml
 ### Prediction
 ```bash
 python predict.py --config config.yaml
+```
+
+### Predict with visualization
+```bash
+# Video prediction
+PYTHONPATH=. python predict/video_predict.py
+
+# Single frame prediction  
+PYTHONPATH=. python predict/single_frame_predict.py
+
+# Stream video  prediction without  visualize
+
+PYTHONPATH=. python run predict/streem_video_predict.py --model_path checkpoints/best_model.pth  --video_path demo.mp4 --output_dir ./predict_video
+
+# Stream video  prediction with  visualize
+
+PYTHONPATH=. python run predict/streem_video_predict.py --model_path checkpoints/best_model.pth  --video_path demo.mp4 --output_dir ./predict_video --visualize
+
+# Stream video  prediction save only predict.csv
+PYTHONPATH=. python run predict/streem_video_predict.py --model_path checkpoints/best_model.pth  --video_path demo.mp4 --output_dir ./predict_video --only_csv
 ```
 
 ### TensorBoard
