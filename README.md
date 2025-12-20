@@ -18,57 +18,57 @@ TrackNet V4 enhances sports object tracking by incorporating motion attention ma
 - PyTorch ≥ 1.9.0
 - CUDA (recommended for training)
 
+## Pretrained Model
+
+A pretrained model checkpoint is available for download:
+
+[Download Model (Google Drive)](https://drive.google.com/file/d/10bCCck9s_WDJkJq9DaFhddsawc-HNypn/view?usp=sharing)
+
+This model was trained on the dataset and achieves strong performance metrics on the test set (see Performance section below).
+
+The pretrained model achieves the following metrics on the test dataset:
+
+| Metric | Score |
+|--------|-------|
+| Accuracy | 94.4% |
+| Precision | 95.8% |
+| Recall | 97.2% |
+| F1-Score | 96.5% |
+
+*Evaluation performed on center frame predictions with threshold 0.5 and tolerance 4px*
+
+
+
 ## Installation
 
-### Option 1: pip
 ```bash
 git clone https://github.com/AnInsomniacy/tracknet-v4-pytorch.git
 cd tracknet-v4-pytorch
 pip install -r requirements.txt
 ```
 
-### Option 2: uv (recommended)
-```bash
-git clone https://github.com/AnInsomniacy/tracknet-v4-pytorch.git
-cd tracknet-v4-pytorch
-curl -LsSf https://astral.sh/uv/install.sh | sh
-source ~/.bashrc
-uv sync
-```
+## Configuration
+
+All parameters are configured in `config.yaml`. Edit this file to customize preprocessing, training, testing, and prediction settings.
 
 ## Usage
 
 ### Data Preprocessing
 ```bash
-# Prepare your dataset
-python preprocessing/video_to_heatmap.py --source dataset/raw --output dataset/preprocessed
-
-# With uv
-uv run preprocessing/video_to_heatmap.py --source dataset/raw --output dataset/preprocessed
+python preprocess.py --config config.yaml
 ```
 
 ### Training
 ```bash
-# Basic training
-python train.py --data dataset/preprocessed
-
-# Custom configuration  
-python train.py --data dataset/preprocessed --batch 8 --epochs 50 --lr 0.001 --optimizer Adam
-
-# Resume training
-python train.py --resume checkpoints/model.pth --data dataset/preprocessed
+python train.py --config config.yaml
 ```
 
-### Evaluation
+### Testing
 ```bash
-# Test model performance
-python test.py --model best_model.pth --data dataset/test
-
-# Detailed evaluation report
-python test.py --model best_model.pth --data dataset/test --report detailed --out results/
+python test.py --config config.yaml
 ```
 
-### Inference
+### Prediction
 ```bash
 # Video prediction
 PYTHONPATH=. python predict/video_predict.py
@@ -87,9 +87,13 @@ PYTHONPATH=. python run predict/streem_video_predict.py --model_path checkpoints
 # Stream video  prediction save only predict.csv
 PYTHONPATH=. python run predict/streem_video_predict.py --model_path checkpoints/best_model.pth  --video_path demo.mp4 --output_dir ./predict_video --only_csv
 
+python predict.py --config config.yaml
 ```
 
-**Note:** Modify model and input paths in prediction scripts as needed for your data.
+### TensorBoard
+```bash
+tensorboard --logdir outputs/
+```
 
 ## Model Architecture
 
@@ -119,19 +123,19 @@ dataset/
 ```
 tracknet-v4-pytorch/
 ├── model/
-│   ├── tracknet_v4.py          # Main TrackNet V4 architecture
-│   ├── tracknet_v2.py          # Legacy TrackNet V2
-│   └── loss.py                 # Weighted Binary Cross Entropy loss
+│   ├── tracknet_v4.py      # TrackNet V4 with motion attention
+│   ├── tracknet_v2.py      # TrackNet V2 baseline
+│   ├── tracknet_exp.py     # Experimental model with CBAM
+│   └── loss.py             # Weighted Binary Cross Entropy loss
 ├── preprocessing/
-│   ├── video_to_heatmap.py     # Video preprocessing pipeline
-│   ├── tracknet_dataset.py     # PyTorch dataset loader
-│   └── data_visualizer.py      # Data visualization tools
-├── predict/
-│   ├── single_frame_predict.py # Single frame inference
-│   └── video_predict.py        # Video batch processing
-├── train.py                    # Training script
-├── test.py                     # Model evaluation
-└── requirements.txt            # Dependencies
+│   ├── tracknet_dataset.py # PyTorch dataset loader
+│   └── data_visualizer.py  # Data visualization tools
+├── config.yaml             # Configuration file
+├── preprocess.py           # Dataset preprocessing
+├── train.py                # Training script
+├── test.py                 # Model evaluation
+├── predict.py              # Video inference
+└── requirements.txt        # Dependencies
 ```
 
 ## Citation
