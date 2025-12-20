@@ -1,21 +1,22 @@
 # 预处理配置
 preprocess:
-  source: dataset/raw # 源数据集目录路径
-  output: dataset/preprocessed # 输出目录路径
+  source: dataset/raw/train # 源数据集目录路径
+  output: dataset/preprocessed/train # 输出目录路径
   sigma: 3.0 # 高斯热图标准差
   force: false # 是否强制覆盖已存在的输出目录
-  workers: 4 # 并行处理线程数
+  workers: 16 # 并行处理线程数
 
 # 训练配置
 train:
-  data: dataset/train # 训练数据集路径
+  gpus: 8 # GPU数量: 1=单卡, 8=8卡DDP
+  data: dataset/preprocessed/train # 训练数据集路径
   resume: null # 恢复训练的实验目录路径 (如: outputs/exp_20241219_140000)
   split: 0.8 # 训练集/验证集分割比例
   seed: 26 # 随机种子
-  batch: 3 # 批次大小
+  batch: 4 # 批次大小
   epochs: 30 # 训练轮数
-  workers: 0 # 数据加载器工作进程数
-  device: auto # 设备: auto/cpu/cuda/mps
+  workers: 8 # 数据加载器工作进程数
+  device: cuda # 设备: auto/cpu/cuda/mps
   optimizer: Adadelta # 优化器: Adadelta/Adam/AdamW/SGD
   lr: null # 学习率 (null表示使用优化器默认值)
   wd: 0 # 权重衰减
@@ -25,6 +26,7 @@ train:
   min_lr: 0.000001 # 最小学习率
   out: outputs # 输出目录
   name: exp # 实验名称
+  dropout: 0.2 # Dropout率
 
 # 测试配置
 test:
@@ -40,9 +42,9 @@ test:
 
 # 视频预测配置
 predict:
-  model: best_model.pth # 模型检查点路径
-  input: input.mp4 # 输入视频路径
-  output: output.mp4 # 输出视频路径
+  model: outputs/exp_20251220_065107/checkpoints/emergency_epoch_4_20251220_070354.pth # 模型检查点路径
+  input: dataset/predict/short.mp4 # 输入视频路径
+  output: dataset/predict/predicted_video.mp4 # 输出视频路径
   threshold: 0.5 # 检测阈值
   dot_size: 5 # 标记点大小 (像素)
   batch_size: 8 # 批量推理大小 (越大越快但需要更多显存)
