@@ -70,6 +70,11 @@ python test.py --config config.yaml
 
 ### Prediction
 ```bash
+python predict.py --config config.yaml
+```
+
+### Predict with visualization
+```bash
 # Video prediction
 PYTHONPATH=. python predict/video_predict.py
 
@@ -86,8 +91,6 @@ PYTHONPATH=. python run predict/streem_video_predict.py --model_path checkpoints
 
 # Stream video  prediction save only predict.csv
 PYTHONPATH=. python run predict/streem_video_predict.py --model_path checkpoints/best_model.pth  --video_path demo.mp4 --output_dir ./predict_video --only_csv
-
-python predict.py --config config.yaml
 ```
 
 ### TensorBoard
