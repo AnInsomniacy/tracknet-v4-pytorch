@@ -60,7 +60,7 @@ class TrackNet(nn.Module):
                     -> Motion Analysis -----------------------> Motion Fusion -------^
     """
 
-    def __init__(self):
+    def __init__(self, dropout=0.0):
         super().__init__()
 
         # motion processing modules
@@ -80,6 +80,7 @@ class TrackNet(nn.Module):
 
         # utility layers
         self.pool = nn.MaxPool2d(2)
+        self.dropout = nn.Dropout2d(dropout)
         self.upsample = nn.Upsample(scale_factor=2, mode='nearest')
         self.output = nn.Conv2d(64, 3, 1)
 
@@ -116,6 +117,7 @@ class TrackNet(nn.Module):
         e3_pool = self.pool(e3)  # [B,256,36,64]
 
         bottleneck = self.enc4(e3_pool)  # [B,512,36,64]
+        bottleneck = self.dropout(bottleneck)
 
         # decoder path with skip connections
         d1 = self.upsample(bottleneck)  # [B,512,72,128]

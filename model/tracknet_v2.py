@@ -8,7 +8,7 @@ class TrackNet(nn.Module):
     Input: [B, 9, 288, 512] -> Output: [B, 3, 288, 512]
     """
 
-    def __init__(self):
+    def __init__(self, dropout=0.0):
         super(TrackNet, self).__init__()
 
         # Encoder - VGG16 style
@@ -18,6 +18,7 @@ class TrackNet(nn.Module):
         self.encoder_block4 = self._make_encoder_block(256, 512, 3)  # 36x64 (bottleneck)
 
         self.pool = nn.MaxPool2d(2, 2)
+        self.dropout = nn.Dropout2d(dropout)
 
         # Decoder with skip connections
         self.decoder_block1 = self._make_decoder_block(768, 256, 3)  # 512+256
@@ -94,6 +95,7 @@ class TrackNet(nn.Module):
 
         # Bottleneck
         bottleneck = self.encoder_block4(enc3_pool)  # [B, 512, 36, 64]
+        bottleneck = self.dropout(bottleneck)
 
         # Decoder - progressive upsampling with skip connections
         dec1 = self.upsample(bottleneck)  # [B, 512, 72, 128]

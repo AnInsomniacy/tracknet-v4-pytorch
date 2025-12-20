@@ -24,7 +24,7 @@ from torch.utils.tensorboard import SummaryWriter
 from tqdm import tqdm
 
 from model.loss import WeightedBinaryCrossEntropy
-from model.tracknet_v4 import TrackNet
+from model.tracknet_v2 import TrackNet
 from preprocessing.tracknet_dataset import FrameHeatmapDataset
 
 
@@ -188,7 +188,7 @@ class Trainer:
         return optimizers[self.cfg['optimizer']]()
 
     def setup_model(self):
-        dropout = self.cfg.get('dropout', 0.2)
+        dropout = self.cfg.get('dropout', 0.0)
         self.model = TrackNet(dropout=dropout).to(self.device)
         if self.world_size > 1:
             self.model = DDP(self.model, device_ids=[self.local_rank])
