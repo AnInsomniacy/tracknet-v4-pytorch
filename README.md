@@ -22,6 +22,20 @@ This repository implements multiple versions of TrackNet for sports object track
 - PyTorch ≥ 1.9.0
 - CUDA (recommended for training)
 
+## Pre-trained Models
+
+Pre-trained model checkpoints are available for download from the [Releases](https://github.com/AnInsomniacy/tracknet-series-pytorch/releases) page:
+
+| Model | Filename | Description |
+|-------|----------|-------------|
+| TrackNet V2 | `tracknet-v2_best-model.pth` | Baseline model with VGG-style encoder-decoder |
+| TrackNet V4 | `tracknet-v4_best-model.pth` | Motion-enhanced U-Net with learnable motion attention |
+
+**Training Details:**
+- Trained for 30 epochs
+- Best model selected based on lowest validation loss
+
+
 ## Configuration
 
 All parameters are configured in `config.yaml`. Edit this file to customize preprocessing, training, testing, and prediction settings.
